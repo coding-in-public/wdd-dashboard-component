@@ -1,0 +1,52 @@
+---
+import type { Transaction } from "@/types/transactions";
+
+type Props = {
+  status: Transaction["status"];
+};
+
+const { status } = Astro.props;
+---
+
+<div class:list={[status.toLowerCase(), "pill"]}>
+  <span class="dot"></span>
+  <span>{status}</span>
+</div>
+
+<style>
+  .pill {
+    --pill-background: var(--bkg);
+    --pill-accent: var(--accent-purple);
+    --pill-text: var(--text);
+    background-color: var(--pill-background);
+    color: var(--pill-text);
+    padding: var(--space-3xs) var(--space-s);
+    border-radius: var(--rounded-full);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    max-width: fit-content;
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: var(--rounded-full);
+      background-color: var(--pill-accent);
+    }
+  }
+
+  .completed {
+    --pill-background: var(--accent-green-bg);
+    --pill-text: var(--accent-green-text);
+    --pill-accent: var(--accent-green-accent);
+  }
+  .pending {
+    --pill-background: var(--accent-yellow-bg);
+    --pill-text: var(--accent-yellow-text);
+    --pill-accent: var(--accent-yellow-accent);
+  }
+  .canceled {
+    --pill-background: var(--accent-red-bg);
+    --pill-text: var(--accent-red-text);
+    --pill-accent: var(--accent-red-accent);
+  }
+</style>

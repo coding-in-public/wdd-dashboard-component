@@ -1,0 +1,75 @@
+---
+import type { Transaction } from "@/types/transactions";
+import StatusPill from "./StatusPill.astro";
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  data: Transaction;
+};
+
+const { data } = Astro.props;
+---
+
+<div class="row">
+  <StatusPill status={data.status} />
+  <div class="stack">
+    <strong>
+      {data.payment_deets.name}
+      ****
+      {data.payment_deets.name}
+    </strong>
+    <p class="muted">{data.payment_deets.type} payment</p>
+  </div>
+  <div class="stack">
+    <strong>
+      {
+        data.payment_deets.amt.toLocaleString("en-us", {
+          currency: "USD",
+          style: "currency",
+        })
+      }
+    </strong>
+    <p class="muted">
+      {
+        new Date(data.payment_deets.date).toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
+      }
+    </p>
+  </div>
+  <p class="muted">{data.payment_deets.vender}</p>
+  <button class="btn">
+    <Icon name="kabob" />
+  </button>
+</div>
+
+<style>
+  .row {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-items: start;
+    grid-template-columns: 170px 290px 120px 150px 1fr;
+    gap: var(--space-l);
+    padding: var(--space-s) var(--space-l);
+    border-bottom: 2px solid var(--light);
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  .stack {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  button {
+    display: grid;
+    place-items: center;
+    background-color: transparent;
+    border: none;
+    color: var(--muted);
+    padding: var(--space-3xs);
+  }
+</style>
